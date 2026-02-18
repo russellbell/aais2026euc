@@ -135,7 +135,7 @@
   <!-- Storage Layer -->
   <rect x="60" y="360" width="1080" height="120" rx="8" fill="#FF9900" fill-opacity="0.1" 
         stroke="#FF9900" stroke-width="2" stroke-dasharray="5,5"/>
-  <text x="70" y="380" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Storage & Data Layer</text>
+  <text x="70" y="380" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Storage &amp; Data Layer</text>
   
   <!-- DocumentDB -->
   <rect x="100" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
@@ -188,7 +188,7 @@
   <!-- Security & Network -->
   <rect x="60" y="520" width="480" height="80" rx="8" fill="#F44336" fill-opacity="0.1" 
         stroke="#F44336" stroke-width="2" stroke-dasharray="5,5"/>
-  <text x="70" y="540" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">Security & Network</text>
+  <text x="70" y="540" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">Security &amp; Network</text>
   
   <!-- IAM -->
   <rect x="100" y="555" width="80" height="30" rx="5" fill="#FF9900"/>
