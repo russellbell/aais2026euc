@@ -9,15 +9,18 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 ## Phase 1: Foundation & Core Infrastructure (Priority 1)
 
 ### Task 1.1: AWS Infrastructure Setup
-**Estimated Time**: 2 hours
+**Estimated Time**: 2.5 hours
 **Assignee**: Kiro
 
 **Acceptance Criteria**:
 - ✅ AWS CDK project initialized with TypeScript
 - ✅ VPC with public/private subnets across 2 AZs created
 - ✅ ALB, NAT Gateway, and security groups configured
-- ✅ S3 bucket with versioning and encryption enabled
+- ✅ ECS Cluster with Fargate capacity providers set up
+- ✅ S3 bucket with versioning and encryption enabled for snapshots
+- ✅ ECR repository created for Jupyter container images
 - ✅ DocumentDB cluster deployed in private subnets
+- ✅ EFS file system with encryption and backup enabled
 - ✅ CloudWatch log groups and basic monitoring created
 
 **Dependencies**: None
@@ -42,19 +45,21 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 ---
 
 ### Task 1.3: API Gateway & Core Backend
-**Estimated Time**: 3 hours
+**Estimated Time**: 3.5 hours
 **Assignee**: Kiro
 
 **Acceptance Criteria**:
 - ✅ FastAPI backend deployed on ECS Fargate
 - ✅ API Gateway with OpenAPI documentation
 - ✅ Database connection and basic CRUD operations
+- ✅ ECS integration for Jupyter container management
+- ✅ EFS mount point creation and management APIs
 - ✅ Health checks and basic monitoring endpoints
 - ✅ Error handling and logging infrastructure
-- ✅ Core data models implemented (Environment, Snapshot, User)
+- ✅ Core data models implemented (Environment, Snapshot, User, JupyterSession)
 
 **Dependencies**: Tasks 1.1, 1.2
-**Deliverables**: Backend API, database schemas, API documentation
+**Deliverables**: Backend API, database schemas, API documentation, ECS task definitions
 
 ---
 
@@ -78,19 +83,21 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 ---
 
 ### Task 2.2: Environment Dashboard
-**Estimated Time**: 2 hours
+**Estimated Time**: 2.5 hours
 **Assignee**: Kiro
 
 **Acceptance Criteria**:
-- ✅ Environment list view with real-time status
+- ✅ Jupyter environment list view with real-time container status
 - ✅ Lab filtering and search functionality
-- ✅ Environment health indicators (stable, drift detected, critical)
-- ✅ Quick actions: snapshot, restore, share
+- ✅ Environment health indicators (running, stopped, drift detected, critical)
+- ✅ Quick actions: launch Jupyter, snapshot, restore, share
+- ✅ WorkSpaces Secure Browser integration for environment access
+- ✅ Container resource usage monitoring (CPU, memory, storage)
 - ✅ Responsive design for desktop and tablet use
 - ✅ Empty states and loading skeletons
 
 **Dependencies**: Task 2.1
-**Deliverables**: Dashboard components, environment list UI
+**Deliverables**: Dashboard components, Jupyter environment list UI, browser integration
 
 ---
 
@@ -113,54 +120,79 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 
 ## Phase 3: Core Platform Features (Priority 1)
 
-### Task 3.1: Environment Snapshot Engine
-**Estimated Time**: 4 hours
+### Task 3.1: Jupyter Environment Engine
+**Estimated Time**: 4.5 hours
 **Assignee**: Kiro
 
 **Acceptance Criteria**:
-- ✅ Docker-based snapshot service deployed on ECS
-- ✅ Agent simulation for capturing environment state
-- ✅ S3 integration for snapshot storage with compression
-- ✅ Metadata extraction and indexing
-- ✅ Incremental snapshot capability
-- ✅ Snapshot validation and integrity checking
+- ✅ Base Jupyter Docker image with scientific Python stack (NumPy, Pandas, SciPy, Matplotlib)
+- ✅ ECS task definition for Jupyter container deployment
+- ✅ EFS integration for persistent notebook storage per researcher
+- ✅ EBS volume attachment for container state and package persistence
+- ✅ Dynamic container provisioning API with resource allocation
+- ✅ WorkSpaces Secure Browser configuration for Jupyter access
+- ✅ Container lifecycle management (start, stop, restart, terminate)
+- ✅ Package installation tracking and logging
+- ✅ Jupyter server configuration and security setup
 
 **Dependencies**: Task 1.3
-**Deliverables**: Snapshot service, storage integration, validation tools
+**Deliverables**: Jupyter Docker image, ECS integration, storage mounting, access configuration
 
 ---
 
-### Task 3.2: Basic Drift Detection
+### Task 3.2: Container Snapshot Engine
+**Estimated Time**: 3.5 hours
+**Assignee**: Kiro
+
+**Acceptance Criteria**:
+- ✅ Container image snapshot creation with Docker commit/push to ECR
+- ✅ EFS snapshot integration for notebook file persistence
+- ✅ EBS snapshot creation for container state preservation
+- ✅ S3 integration for snapshot metadata and documentation storage
+- ✅ Package manifest extraction from container environments
+- ✅ Snapshot restoration workflow with container provisioning
+- ✅ Incremental snapshot capability to reduce storage costs
+- ✅ Snapshot validation and integrity checking
+
+**Dependencies**: Task 3.1
+**Deliverables**: Snapshot service, restoration workflows, validation tools
+
+---
+
+### Task 3.3: Basic Drift Detection
 **Estimated Time**: 3 hours
 **Assignee**: Kiro
 
 **Acceptance Criteria**:
 - ✅ Lambda-based drift detection service
-- ✅ EventBridge integration for real-time processing
-- ✅ Simple drift algorithms (file changes, package versions)
-- ✅ Alert generation and notification system
-- ✅ Drift visualization in frontend dashboard
-- ✅ Basic severity classification (minor, major, critical)
+- ✅ EventBridge integration for real-time container event processing
+- ✅ Python package change detection (pip, conda installations)
+- ✅ Jupyter kernel and extension modification monitoring
+- ✅ EFS file change monitoring for notebook modifications
+- ✅ Alert generation and notification system for package drift
+- ✅ Drift visualization in frontend dashboard with package comparisons
+- ✅ Basic severity classification (minor package update, major version change, critical dependency conflict)
 
-**Dependencies**: Tasks 3.1, 2.2
-**Deliverables**: Drift detection service, alert system, UI components
+**Dependencies**: Tasks 3.1, 3.2, 2.2
+**Deliverables**: Drift detection service, container monitoring, alert system, UI components
 
 ---
 
-### Task 3.3: Knowledge Transfer System
-**Estimated Time**: 2 hours
+### Task 3.4: Knowledge Transfer System
+**Estimated Time**: 2.5 hours
 **Assignee**: Kiro
 
 **Acceptance Criteria**:
-- ✅ Transfer package creation (environment + docs + history)
-- ✅ Researcher succession workflow
-- ✅ Onboarding checklist and guided setup
-- ✅ Historical context preservation
+- ✅ Transfer package creation (Jupyter environment + notebooks + data + package history)
+- ✅ Researcher succession workflow with container handoff
+- ✅ Onboarding checklist and guided Jupyter environment setup
+- ✅ Historical context preservation including notebook execution history
 - ✅ Transfer approval process for lab administrators
-- ✅ Export functionality for offline documentation
+- ✅ Export functionality for offline documentation of environments and notebooks
+- ✅ Package dependency documentation and rationale capture
 
-**Dependencies**: Tasks 3.1, 2.2
-**Deliverables**: Transfer workflows, approval system, documentation tools
+**Dependencies**: Tasks 3.1, 3.2, 2.2
+**Deliverables**: Transfer workflows, approval system, documentation tools, notebook migration
 
 ---
 
@@ -178,7 +210,7 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 - ✅ Shared environment dashboard
 - ✅ Access revocation and cleanup procedures
 
-**Dependencies**: Tasks 2.2, 3.1
+**Dependencies**: Tasks 2.2, 3.1, 3.2
 **Deliverables**: Collaboration workflows, sharing UI, audit system
 
 ---
@@ -212,7 +244,7 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 - ✅ Drift impact analysis and risk scoring
 - ✅ Integration with existing lab monitoring tools
 
-**Dependencies**: Task 3.2
+**Dependencies**: Task 3.3
 **Deliverables**: Enhanced detection algorithms, ML models, automation tools
 
 ---
@@ -333,16 +365,17 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 ## Success Metrics
 
 ### MVP Success Criteria (End of Hackathon)
-- [ ] Complete environment snapshot and restore cycle demonstrated
-- [ ] Real-time drift detection working with visible alerts
-- [ ] Multi-lab collaboration showing access control
-- [ ] Knowledge transfer workflow from one researcher to another
-- [ ] Executive dashboard showing research continuity metrics
+- [ ] Complete Jupyter environment launch, snapshot, and restore cycle demonstrated
+- [ ] Real-time drift detection working with Python package change alerts
+- [ ] Multi-lab Jupyter environment sharing showing access control via WorkSpaces Secure Browser
+- [ ] Knowledge transfer workflow from one researcher's Jupyter environment to another
+- [ ] Executive dashboard showing research continuity metrics across containerized environments
 
 ### Technical Achievement Targets
 - [ ] <3 second page load times for all major views
-- [ ] <15 minute environment restore time
-- [ ] <5 minute drift detection latency
+- [ ] <5 minute Jupyter container provisioning time
+- [ ] <15 minute environment restore time including container and storage
+- [ ] <5 minute drift detection latency for package changes
 - [ ] Zero security vulnerabilities in penetration testing
 - [ ] 99%+ uptime during demo period
 

@@ -1,0 +1,274 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Arrow marker for data flow -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4CAF50"/>
+    </marker>
+    <!-- Dark gradient backgrounds -->
+    <linearGradient id="aws-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F1419;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#1a1a2e;stop-opacity:0.9"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Dark Background -->
+  <rect x="0" y="0" width="1200" height="750" fill="#0F1419"/>
+  
+  <!-- AWS Cloud Background -->
+  <rect x="30" y="30" width="1140" height="690" rx="15" fill="url(#aws-bg)" 
+        stroke="#FF9900" stroke-width="2"/>
+  <text x="600" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="bold" 
+        fill="#FF9900" text-anchor="middle">AWS Cloud Infrastructure</text>
+  
+  <!-- Top Row: Users, Access, Web Portal -->
+  
+  <!-- Users Section -->
+  <rect x="60" y="80" width="180" height="100" rx="8" fill="rgba(76, 175, 80, 0.1)" 
+        stroke="#4CAF50" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="70" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4CAF50">Researchers</text>
+  
+  <!-- Dr. Whitmore -->
+  <rect x="85" y="120" width="60" height="40" rx="5" fill="#4CAF50"/>
+  <text x="115" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">👨‍🔬</text>
+  <text x="115" y="150" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">Dr. Whitmore</text>
+  
+  <!-- Lab Team -->
+  <rect x="155" y="120" width="60" height="40" rx="5" fill="#4CAF50"/>
+  <text x="185" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">👩‍🔬</text>
+  <text x="185" y="150" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">Lab Team</text>
+  
+  <!-- Access Layer -->
+  <rect x="280" y="80" width="260" height="100" rx="8" fill="rgba(255, 153, 0, 0.1)" 
+        stroke="#FF9900" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="290" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Secure Access Layer</text>
+  
+  <!-- WorkSpaces Secure Browser -->
+  <rect x="300" y="120" width="100" height="40" rx="5" fill="#FF9900"/>
+  <text x="350" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🖥️</text>
+  <text x="350" y="170" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">WorkSpaces Secure Browser</text>
+  
+  <!-- CloudFront -->
+  <rect x="420" y="120" width="80" height="40" rx="5" fill="#FF9900"/>
+  <text x="460" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">☁️</text>
+  <text x="460" y="175" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">CloudFront</text>
+  
+  <!-- Web Portal -->
+  <rect x="580" y="80" width="180" height="100" rx="8" fill="rgba(33, 150, 243, 0.1)" 
+        stroke="#2196F3" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="590" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2196F3">Web Portal</text>
+  
+  <!-- React Dashboard -->
+  <rect x="620" y="120" width="100" height="40" rx="5" fill="#2196F3"/>
+  <text x="670" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">⚛️</text>
+  <text x="670" y="175" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">React Dashboard</text>
+  
+  <!-- Container & Research Environments -->
+  <rect x="800" y="80" width="340" height="100" rx="8" fill="rgba(76, 175, 80, 0.1)" 
+        stroke="#4CAF50" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="810" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4CAF50">Container Orchestration</text>
+  
+  <!-- ECS -->
+  <rect x="820" y="120" width="70" height="40" rx="5" fill="#FF9900"/>
+  <text x="855" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">📦</text>
+  <text x="855" y="175" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">ECS Cluster</text>
+  
+  <!-- Fargate -->
+  <rect x="910" y="120" width="70" height="40" rx="5" fill="#FF9900"/>
+  <text x="945" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🚀</text>
+  <text x="945" y="175" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">Fargate Tasks</text>
+  
+  <!-- Jupyter Environments -->
+  <rect x="1000" y="120" width="120" height="40" rx="5" fill="#4CAF50"/>
+  <text x="1030" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">📓</text>
+  <text x="1090" y="135" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">📓</text>
+  <text x="1060" y="175" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">Jupyter Notebooks</text>
+  
+  <!-- Second Row: Auth, API, Services -->
+  
+  <!-- Authentication -->
+  <rect x="60" y="220" width="160" height="80" rx="8" fill="rgba(255, 153, 0, 0.1)" 
+        stroke="#FF9900" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="70" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Authentication</text>
+  
+  <rect x="90" y="255" width="100" height="30" rx="5" fill="#FF9900"/>
+  <text x="140" y="270" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🔐</text>
+  <text x="140" y="315" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">Cognito + AD</text>
+  
+  <!-- API Gateway -->
+  <rect x="260" y="220" width="160" height="80" rx="8" fill="rgba(255, 153, 0, 0.1)" 
+        stroke="#FF9900" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="270" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">API Layer</text>
+  
+  <rect x="290" y="255" width="100" height="30" rx="5" fill="#FF9900"/>
+  <text x="340" y="270" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🚪</text>
+  <text x="340" y="315" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">API Gateway</text>
+  
+  <!-- Backend Services -->
+  <rect x="460" y="220" width="360" height="80" rx="8" fill="rgba(33, 150, 243, 0.1)" 
+        stroke="#2196F3" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="470" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2196F3">Backend Services</text>
+  
+  <!-- Environment Manager -->
+  <rect x="480" y="255" width="80" height="30" rx="5" fill="#2196F3"/>
+  <text x="520" y="270" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">⚙️</text>
+  <text x="520" y="315" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">Environment Mgr</text>
+  
+  <!-- Drift Detection -->
+  <rect x="580" y="255" width="80" height="30" rx="5" fill="#FF9900"/>
+  <text x="620" y="270" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">⚡</text>
+  <text x="620" y="315" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">Drift Detection</text>
+  
+  <!-- Snapshot Engine -->
+  <rect x="680" y="255" width="80" height="30" rx="5" fill="#9C27B0"/>
+  <text x="720" y="270" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">📸</text>
+  <text x="720" y="315" font-family="Arial, sans-serif" font-size="8" fill="#879196" text-anchor="middle">Snapshot Engine</text>
+  
+  <!-- Event Processing -->
+  <rect x="860" y="220" width="160" height="80" rx="8" fill="rgba(255, 153, 0, 0.1)" 
+        stroke="#FF9900" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="870" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Event Processing</text>
+  
+  <rect x="890" y="255" width="100" height="30" rx="5" fill="#FF9900"/>
+  <text x="940" y="270" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🌉</text>
+  <text x="940" y="315" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">EventBridge</text>
+  
+  <!-- Storage Layer -->
+  <rect x="60" y="360" width="1080" height="120" rx="8" fill="rgba(255, 153, 0, 0.1)" 
+        stroke="#FF9900" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="70" y="380" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Storage & Data Layer</text>
+  
+  <!-- DocumentDB -->
+  <rect x="100" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="140" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">🗃️</text>
+  <text x="140" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">DocumentDB</text>
+  <text x="140" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Metadata)</text>
+  
+  <!-- EFS -->
+  <rect x="220" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="260" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">📁</text>
+  <text x="260" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">EFS</text>
+  <text x="260" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Notebooks)</text>
+  
+  <!-- EBS -->
+  <rect x="340" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="380" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">💾</text>
+  <text x="380" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">EBS</text>
+  <text x="380" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Container State)</text>
+  
+  <!-- S3 -->
+  <rect x="460" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="500" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">🪣</text>
+  <text x="500" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">S3</text>
+  <text x="500" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Snapshots)</text>
+  
+  <!-- ECR -->
+  <rect x="580" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="620" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">📦</text>
+  <text x="620" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">ECR</text>
+  <text x="620" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Images)</text>
+  
+  <!-- DynamoDB -->
+  <rect x="700" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="740" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">⚡</text>
+  <text x="740" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">DynamoDB</text>
+  <text x="740" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Real-time)</text>
+  
+  <!-- ElastiCache -->
+  <rect x="820" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="860" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">⚡</text>
+  <text x="860" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">ElastiCache</text>
+  <text x="860" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Redis)</text>
+  
+  <!-- CloudWatch -->
+  <rect x="940" y="400" width="80" height="50" rx="5" fill="#FF9900"/>
+  <text x="980" y="420" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">📊</text>
+  <text x="980" y="465" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">CloudWatch</text>
+  <text x="980" y="477" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">(Monitoring)</text>
+  
+  <!-- Security & Network -->
+  <rect x="60" y="520" width="480" height="80" rx="8" fill="rgba(244, 67, 54, 0.1)" 
+        stroke="#F44336" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="70" y="540" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">Security & Network</text>
+  
+  <!-- IAM -->
+  <rect x="100" y="555" width="80" height="30" rx="5" fill="#FF9900"/>
+  <text x="140" y="570" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🔒</text>
+  <text x="140" y="615" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">IAM</text>
+  
+  <!-- KMS -->
+  <rect x="220" y="555" width="80" height="30" rx="5" fill="#FF9900"/>
+  <text x="260" y="570" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🔑</text>
+  <text x="260" y="615" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">KMS</text>
+  
+  <!-- VPC -->
+  <rect x="340" y="555" width="80" height="30" rx="5" fill="#FF9900"/>
+  <text x="380" y="570" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">🌐</text>
+  <text x="380" y="615" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">VPC</text>
+  
+  <!-- ALB -->
+  <rect x="460" y="555" width="80" height="30" rx="5" fill="#FF9900"/>
+  <text x="500" y="570" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">⚖️</text>
+  <text x="500" y="615" font-family="Arial, sans-serif" font-size="9" fill="#879196" text-anchor="middle">ALB</text>
+  
+  <!-- Data Flow Arrows -->
+  <!-- Users to WorkSpaces -->
+  <path d="M 240 140 L 300 140" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- WorkSpaces to CloudFront -->
+  <path d="M 400 140 L 420 140" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- CloudFront to React -->
+  <path d="M 500 140 L 580 140" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- React to ECS -->
+  <path d="M 760 140 L 820 140" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Auth to API -->
+  <path d="M 220 270 L 260 270" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- API to Backend Services -->
+  <path d="M 420 270 L 460 270" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Backend to Storage -->
+  <path d="M 520 300 L 520 360" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 620 300 L 620 360" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 720 300 L 720 360" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Jupyter to Storage -->
+  <path d="M 1060 180 L 260 360" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="3,3"/>
+  <path d="M 1060 180 L 380 360" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="3,3"/>
+  
+  <!-- Security Boundaries -->
+  <rect x="250" y="210" width="580" height="100" rx="8" fill="none" stroke="#F44336" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="260" y="230" font-family="Arial, sans-serif" font-size="10" fill="#F44336">Private Subnets - Application Tier</text>
+  
+  <rect x="50" y="350" width="1090" height="140" rx="8" fill="none" stroke="#F44336" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="60" y="345" font-family="Arial, sans-serif" font-size="10" fill="#F44336">Private Subnets - Data Tier</text>
+  
+  <!-- Title and Labels -->
+  <text x="600" y="20" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#FF9900" text-anchor="middle">West Tek Scientific Environment Preservation Platform</text>
+  
+  <!-- Legend -->
+  <g transform="translate(60, 650)">
+    <rect x="0" y="0" width="1080" height="60" rx="5" fill="rgba(15, 20, 25, 0.8)" stroke="#FF9900" stroke-width="1"/>
+    <text x="10" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF9900">Legend:</text>
+    
+    <circle cx="80" cy="15" r="6" fill="#4CAF50"/>
+    <text x="95" y="20" font-family="Arial, sans-serif" font-size="10" fill="#879196">Research Apps</text>
+    
+    <circle cx="200" cy="15" r="6" fill="#2196F3"/>
+    <text x="215" y="20" font-family="Arial, sans-serif" font-size="10" fill="#879196">Application Services</text>
+    
+    <circle cx="350" cy="15" r="6" fill="#FF9900"/>
+    <text x="365" y="20" font-family="Arial, sans-serif" font-size="10" fill="#879196">AWS Services</text>
+    
+    <circle cx="480" cy="15" r="6" fill="#9C27B0"/>
+    <text x="495" y="20" font-family="Arial, sans-serif" font-size="10" fill="#879196">Snapshot Services</text>
+    
+    <line x1="600" y1="10" x2="630" y2="10" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="640" y="15" font-family="Arial, sans-serif" font-size="10" fill="#879196">Data Flow</text>
+    
+    <line x1="720" y1="10" x2="750" y2="10" stroke="#F44336" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="760" y="15" font-family="Arial, sans-serif" font-size="10" fill="#879196">Security Boundaries</text>
+  </g>
+</svg>
