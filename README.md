@@ -14,7 +14,7 @@ West Tek Research requires a system that guarantees experimental reproducibility
 
 ## Key Features
 
-- **Jupyter Environment Management**: Launch and access containerized Jupyter notebook servers with secure browser-based access via WorkSpaces Secure Browser
+- **Jupyter Environment Management**: Launch and access containerized Jupyter notebook servers with secure browser-based access via WorkSpaces Applications elastic fleet with Ubuntu Pro 24.04
 - **Environment Snapshot Management**: Create and restore complete Jupyter environment snapshots including container images, Python packages, notebooks, and data with 100% fidelity
 - **AI-Powered Drift Detection**: Immediate alerts when Python packages, Jupyter kernels, or configurations change unexpectedly, with an AI Drift Analyzer Agent (Amazon Bedrock) that explains changes in plain English, assesses risk to experiments, and recommends actions
 - **Lab Collaboration Gateway**: Controlled sharing of Jupyter environments between labs with audit trails and read-only templates
@@ -26,9 +26,9 @@ West Tek Research requires a system that guarantees experimental reproducibility
 Built on AWS infrastructure using:
 - **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
 - **Backend**: FastAPI (Python 3.11) on ECS Fargate
-- **Research Environments**: Jupyter Notebook containers on ECS/Fargate with WorkSpaces Secure Browser access
+- **Research Environments**: Jupyter Notebook containers on ECS/Fargate with WorkSpaces Applications elastic fleet (Ubuntu Pro 24.04)
 - **Storage**: 
-  - S3 (container image snapshots)
+  - S3 (container image snapshots, WorkSpaces home folders)
   - ECR (Docker registry for Jupyter images)
   - EFS (persistent notebook storage)
   - EBS (container state and packages)
@@ -39,7 +39,8 @@ Built on AWS infrastructure using:
   - Amazon Bedrock Knowledge Bases with RAG (notebooks, package manifests, experiment docs)
   - OpenSearch Serverless (vector store)
   - Amazon Titan Embeddings V2
-- **Security**: AWS Cognito with Active Directory integration, IAM roles, KMS encryption
+- **Access**: WorkSpaces Applications elastic fleet with Ubuntu Pro 24.04 for browser-based Jupyter access
+- **Security**: AWS Cognito with Active Directory integration, IAM roles, KMS encryption, internal ALB
 - **Monitoring**: CloudWatch, EventBridge, X-Ray
 
 ## Container Architecture
@@ -53,7 +54,7 @@ ECS/Fargate Task
 └── Ephemeral Storage - /tmp (temporary computation)
 ```
 
-Access via WorkSpaces Secure Browser provides secure, browser-based access to Jupyter environments without local software installation.
+Access via WorkSpaces Applications elastic fleet with Ubuntu Pro 24.04 provides secure, serverless, browser-based access to Jupyter environments with automatic capacity management.
 
 ## Project Structure
 

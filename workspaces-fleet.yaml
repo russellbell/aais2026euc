@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'WorkSpaces Applications Elastic Fleet with Ubuntu Pro 24.04'
+
+Parameters:
+  VpcId:
+    Type: String
+    Default: vpc-07df495f9656c03a5
+    Description: VPC ID from WestTekNetwork stack
+  
+  PrivateSubnet1:
+    Type: String
+    Default: subnet-0b6559496c3eb6205
+    Description: Private Subnet 1 ID
+  
+  PrivateSubnet2:
+    Type: String
+    Default: subnet-03c348a9aee04ffcb
+    Description: Private Subnet 2 ID
+  
+  SecurityGroupId:
+    Type: String
+    Default: sg-093490fe6c39a1845
+    Description: Security Group ID for WorkSpaces instances
+  
+  S3BucketName:
+    Type: String
+    Default: westtekworkspace-workspacesbucketef65b428-gncj00ojow00
+    Description: S3 bucket for home folders
+
+Resources:
+  # AppStream Fleet (WorkSpaces Applications uses AppStream API)
+  JupyterAccessFleet:
+    Type: AWS::AppStream::Fleet
+    Properties:
+      Name: west-tek-jupyter-fleet
+      Description: Elastic fleet for accessing Jupyter environments
+      FleetType: ELASTIC
+      InstanceType: stream.standard.medium
+      Platform: UBUNTU_PRO_2404
+      MaxConcurrentSessions: 5
+      VpcConfig:
+        SubnetIds:
+          - !Ref PrivateSubnet1
+          - !Ref PrivateSubnet2
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      StreamView: DESKTOP
+      DisconnectTimeoutInSeconds: 900
+      IdleDisconnectTimeoutInSeconds: 600
+      MaxUserDurationInSeconds: 28800
+      EnableDefaultInternetAccess: false
+
+  # AppStream Stack
+  JupyterAccessStack:
+    Type: AWS::AppStream::Stack
+    Properties:
+      Name: west-tek-jupyter-stack
+      Description: Stack for accessing Jupyter notebook environments
+      StorageConnectors:
+        - ConnectorType: HOMEFOLDERS
+          ResourceIdentifier: !Ref S3BucketName
+      UserSettings:
+        - Action: CLIPBOARD_COPY_FROM_LOCAL_DEVICE
+          Permission: ENABLED
+        - Action: CLIPBOARD_COPY_TO_LOCAL_DEVICE
+          Permission: ENABLED
+        - Action: FILE_UPLOAD
+          Permission: ENABLED
+        - Action: FILE_DOWNLOAD
+          Permission: ENABLED
+        - Action: PRINTING_TO_LOCAL_DEVICE
+          Permission: DISABLED
+      ApplicationSettings:
+        Enabled: true
+        SettingsGroup: JupyterSettings
+
+  # Associate Fleet with Stack
+  StackFleetAssociation:
+    Type: AWS::AppStream::StackFleetAssociation
+    Properties:
+      FleetName: !Ref JupyterAccessFleet
+      StackName: !Ref JupyterAccessStack
+
+Outputs:
+  FleetName:
+    Description: Name of the WorkSpaces Applications fleet
+    Value: !Ref JupyterAccessFleet
+    Export:
+      Name: !Sub '${AWS::StackName}-FleetName'
+  
+  StackName:
+    Description: Name of the WorkSpaces Applications stack
+    Value: !Ref JupyterAccessStack
+    Export:
+      Name: !Sub '${AWS::StackName}-StackName'
+  
+  StreamingURL:
+    Description: Base URL for streaming access
+    Value: !Sub 'https://appstream2.${AWS::Region}.aws.amazon.com/authenticate'
