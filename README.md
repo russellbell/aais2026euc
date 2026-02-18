@@ -6,9 +6,7 @@ A platform for preserving exact Jupyter-based scientific computing environments 
 
 Our platform leverages AWS's container orchestration and end-user computing services to provide scientists with reproducible, drift-resistant research environments:
 
-<div align="center">
-  <img src="west-tek-architecture.svg" alt="West Tek AWS Architecture Diagram" width="100%">
-</div>
+![West Tek AWS Architecture Diagram](west-tek-architecture.svg)
 
 ## Overview
 
