@@ -196,6 +196,96 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 
 ---
 
+## Phase 3.5: AI Agent Integration - Bedrock Agents (Priority 1)
+
+### Task 3.5: Bedrock Knowledge Base Setup
+**Estimated Time**: 2 hours
+**Assignee**: Kiro
+
+**Acceptance Criteria**:
+- ✅ S3 bucket created for Knowledge Base data source (s3://west-tek-knowledge-base/) with folder structure for notebooks, package manifests, experiment logs, and environment docs
+- ✅ OpenSearch Serverless collection created with vector search configuration
+- ✅ Amazon Bedrock Knowledge Base provisioned with S3 data source and Amazon Titan Embeddings V2
+- ✅ Hierarchical chunking strategy configured (parent: 1500 tokens, child: 300 tokens)
+- ✅ Knowledge Base sync pipeline: EventBridge rule triggers Lambda on new snapshot events to export notebooks (ipynb → markdown), extract pip freeze manifests, generate environment summaries, upload to S3, and call StartIngestionJob API
+- ✅ IAM roles and policies for Bedrock Knowledge Base access to S3 and OpenSearch Serverless
+- ✅ Initial test data ingested and vector search verified
+
+**Dependencies**: Tasks 1.1, 3.2
+**Deliverables**: Knowledge Base infrastructure (CDK), S3 data source, sync pipeline Lambda, OpenSearch Serverless collection
+
+---
+
+### Task 3.6: Drift Analyzer Bedrock Agent
+**Estimated Time**: 3 hours
+**Assignee**: Kiro
+
+**Acceptance Criteria**:
+- ✅ Amazon Bedrock Agent created with Claude foundation model and drift analysis instructions
+- ✅ Action group Lambda functions implemented:
+  - GetDriftEvents(environment_id, time_range) — queries DynamoDB for drift event details
+  - GetPackageChangelog(package_name, old_version, new_version) — fetches changelog/release notes from PyPI or package metadata
+  - GetEnvironmentNotebooks(environment_id) — lists notebooks and their Python import dependencies
+  - GetSnapshotComparison(snapshot_id_before, snapshot_id_after) — returns package and config diff between two snapshots
+  - GetEnvironmentConfig(environment_id) — returns current environment configuration from DocumentDB
+- ✅ Action group OpenAPI schemas defined for all Lambda functions
+- ✅ Agent configured with instructions for risk assessment, plain-English explanations, and actionable recommendations (accept, rollback, pin)
+- ✅ EventBridge integration: critical drift events automatically invoke the agent via Lambda, with analysis results stored in DynamoDB and pushed to dashboard
+- ✅ API endpoint created (POST /api/agents/drift-analyzer/chat) for on-demand conversational access via InvokeAgent API
+- ✅ Agent responses include citations referencing specific packages, notebooks, and snapshots
+- ✅ All agent interactions logged to DocumentDB audit trail
+- ✅ IAM roles scoped to lab-level data access (agent can only access data for the requesting researcher's lab)
+
+**Dependencies**: Tasks 3.3, 3.5, 1.2
+**Deliverables**: Bedrock Agent configuration, action group Lambdas, API endpoint, EventBridge integration
+
+---
+
+### Task 3.7: Knowledge Transfer Bedrock Agent
+**Estimated Time**: 3 hours
+**Assignee**: Kiro
+
+**Acceptance Criteria**:
+- ✅ Amazon Bedrock Agent created with Claude foundation model and knowledge transfer instructions
+- ✅ Bedrock Knowledge Base associated with the agent for RAG over notebooks, package manifests, and experiment documentation
+- ✅ Action group Lambda functions implemented:
+  - GetEnvironmentDetails(environment_id) — returns environment metadata from DocumentDB
+  - GetSnapshotHistory(environment_id) — returns chronological snapshot list with metadata
+  - GetDriftHistory(environment_id, time_range) — returns historical drift events
+  - GetResearcherProfile(researcher_id) — returns researcher info and their environment list
+  - GetPackageInstallHistory(environment_id, package_name) — returns install/update/pin timeline for a specific package
+  - GetTransferPackage(environment_id) — returns the full knowledge transfer summary
+  - GetOnboardingChecklist(environment_id) — returns guided setup steps for the new researcher
+- ✅ Action group OpenAPI schemas defined for all Lambda functions
+- ✅ Agent configured with instructions to answer questions with citations, proactively summarize inherited environments, and trace package decisions back through history
+- ✅ API endpoint created (POST /api/agents/knowledge-transfer/chat) for conversational access via InvokeAgent API
+- ✅ Agent responses include citations linking to specific Knowledge Base source documents (notebooks, manifests, logs)
+- ✅ All agent interactions logged to DocumentDB audit trail
+- ✅ IAM roles scoped to enforce lab-level and researcher-level access controls
+
+**Dependencies**: Tasks 3.4, 3.5, 1.2
+**Deliverables**: Bedrock Agent configuration, Knowledge Base association, action group Lambdas, API endpoint
+
+---
+
+### Task 3.8: Agent Chat Frontend Integration
+**Estimated Time**: 2 hours
+**Assignee**: Kiro
+
+**Acceptance Criteria**:
+- ✅ Chat panel component built in React with message history, streaming responses, and citation rendering
+- ✅ Chat panel accessible from Drift Monitor view (opens Drift Analyzer Agent context) and Knowledge Transfer view (opens Knowledge Transfer Agent context)
+- ✅ Agent selector allows switching between Drift Analyzer and Knowledge Transfer agents
+- ✅ Citation links in agent responses are clickable and navigate to the referenced snapshot, notebook, or drift event in the dashboard
+- ✅ Chat history persisted per session via React Query
+- ✅ Loading states, error handling, and retry logic for agent API calls
+- ✅ Responsive design for desktop and tablet
+
+**Dependencies**: Tasks 2.1, 3.6, 3.7
+**Deliverables**: Chat panel React components, agent API integration, citation rendering
+
+---
+
 ## Phase 4: Advanced Features (Priority 2)
 
 ### Task 4.1: Inter-Lab Collaboration
@@ -316,7 +406,7 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 - ✅ Backup deployment ready for failover
 - ✅ Demo talking points and flow documented
 
-**Dependencies**: MVP features complete (Phases 1-3)
+**Dependencies**: MVP features complete (Phases 1-3.5)
 **Deliverables**: Demo environment, sample data, presentation materials
 
 ---
@@ -347,6 +437,12 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
   - *Mitigation*: Implement incremental snapshots and compression
 - **Real-time Drift**: EventBridge latency may not meet real-time requirements
   - *Mitigation*: Implement polling fallback for critical environments
+- **Bedrock Agent Latency**: Agent reasoning and Knowledge Base retrieval may add response latency
+  - *Mitigation*: Use streaming responses in the chat UI, cache frequent queries, optimize chunking strategy
+- **Knowledge Base Relevance**: RAG retrieval may return irrelevant notebook chunks
+  - *Mitigation*: Use hierarchical chunking, test with representative queries, tune chunk size and overlap
+- **Bedrock Region Availability**: Bedrock Agents or Knowledge Bases may not be available in target region
+  - *Mitigation*: Verify region support during Phase 1 infrastructure setup, plan cross-region API calls if needed
 
 ### Timeline Risks
 - **Integration Complexity**: Third-party integrations may take longer than expected
@@ -370,6 +466,8 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 - [ ] Multi-lab Jupyter environment sharing showing access control via WorkSpaces Secure Browser
 - [ ] Knowledge transfer workflow from one researcher's Jupyter environment to another
 - [ ] Executive dashboard showing research continuity metrics across containerized environments
+- [ ] Drift Analyzer Agent demonstrates AI-powered analysis of a package change with risk assessment and recommendation
+- [ ] Knowledge Transfer Agent answers questions about an inherited environment using RAG over notebooks and package history with citations
 
 ### Technical Achievement Targets
 - [ ] <3 second page load times for all major views
@@ -378,6 +476,8 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 - [ ] <5 minute drift detection latency for package changes
 - [ ] Zero security vulnerabilities in penetration testing
 - [ ] 99%+ uptime during demo period
+- [ ] <10 second agent response time for conversational queries (streaming first token <2 seconds)
+- [ ] Knowledge Base retrieval returns relevant results for >90% of test queries
 
 ### Business Value Demonstration
 - [ ] Quantified time savings for researcher onboarding
@@ -385,3 +485,5 @@ This project is structured for hackathon execution with MVP delivery in mind. Ta
 - [ ] Measured reduction in IT support overhead
 - [ ] Showcased improved collaboration efficiency
 - [ ] Validated compliance and audit readiness
+- [ ] Demonstrated AI-assisted drift resolution reducing need for IT escalation
+- [ ] Demonstrated AI-assisted onboarding where new researcher answers are sourced from institutional knowledge

@@ -16,9 +16,9 @@ West Tek Research requires a system that guarantees experimental reproducibility
 
 - **Jupyter Environment Management**: Launch and access containerized Jupyter notebook servers with secure browser-based access via WorkSpaces Secure Browser
 - **Environment Snapshot Management**: Create and restore complete Jupyter environment snapshots including container images, Python packages, notebooks, and data with 100% fidelity
-- **Real-time Drift Detection**: Immediate alerts when Python packages, Jupyter kernels, or configurations change unexpectedly
+- **AI-Powered Drift Detection**: Immediate alerts when Python packages, Jupyter kernels, or configurations change unexpectedly, with an AI Drift Analyzer Agent (Amazon Bedrock) that explains changes in plain English, assesses risk to experiments, and recommends actions
 - **Lab Collaboration Gateway**: Controlled sharing of Jupyter environments between labs with audit trails and read-only templates
-- **Knowledge Transfer Pipeline**: Seamless researcher succession with complete experimental context including notebooks, packages, and execution history
+- **AI-Powered Knowledge Transfer**: Seamless researcher succession with a conversational Knowledge Transfer Agent (Amazon Bedrock) that answers questions about inherited environments using RAG over notebooks, package histories, and experiment documentation
 - **Compliance & Audit Trail**: Complete audit trails for research reproducibility and funding reviews
 
 ## Architecture
@@ -34,6 +34,11 @@ Built on AWS infrastructure using:
   - EBS (container state and packages)
   - DocumentDB (metadata)
   - DynamoDB (drift tracking)
+- **AI/ML**:
+  - Amazon Bedrock Agents (Drift Analyzer, Knowledge Transfer)
+  - Amazon Bedrock Knowledge Bases with RAG (notebooks, package manifests, experiment docs)
+  - OpenSearch Serverless (vector store)
+  - Amazon Titan Embeddings V2
 - **Security**: AWS Cognito with Active Directory integration, IAM roles, KMS encryption
 - **Monitoring**: CloudWatch, EventBridge, X-Ray
 
@@ -65,8 +70,9 @@ Access via WorkSpaces Secure Browser provides secure, browser-based access to Ju
 1. **Phase 1**: Foundation & Core Infrastructure (AWS CDK, ECS/Fargate, Auth, API, EFS/EBS)
 2. **Phase 2**: Frontend & User Experience (React dashboard, Jupyter launcher, snapshot UI)
 3. **Phase 3**: Core Platform Features (Jupyter container engine, snapshot/restore, drift detection, knowledge transfer)
-4. **Phase 4**: Advanced Features (Inter-lab collaboration, analytics, enhanced drift detection)
-5. **Phase 5**: Production Readiness (Security, performance, monitoring)
+4. **Phase 3.5**: AI Agent Integration (Bedrock Knowledge Base, Drift Analyzer Agent, Knowledge Transfer Agent, chat UI)
+5. **Phase 4**: Advanced Features (Inter-lab collaboration, analytics, enhanced drift detection)
+6. **Phase 5**: Production Readiness (Security, performance, monitoring)
 
 ## Success Criteria
 
@@ -75,6 +81,8 @@ Access via WorkSpaces Secure Browser provides secure, browser-based access to Ju
 - 75% reduction in time to share and align Jupyter environments between labs
 - New researchers productive in inherited Jupyter environments within 1 week instead of 4 weeks
 - 60% reduction in IT support tickets for environment and package management issues
+- 80% of drift events resolved with AI-recommended actions without IT escalation
+- New researcher environment questions answered by AI Knowledge Transfer Agent >80% of the time
 - <5 minute Jupyter container provisioning time
 - <15 minute environment restore time including container and storage
 

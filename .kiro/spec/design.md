@@ -2,36 +2,54 @@
 
 ## Architecture Overview
 
-The West Tek platform follows a microservices architecture deployed on AWS, designed for scientific environment preservation with enterprise-grade security and compliance. The system uses event-driven architecture to provide real-time drift detection while maintaining complete environment isolation between labs.
+The West Tek platform follows a microservices architecture deployed on AWS, designed for scientific environment preservation with enterprise-grade security and compliance. The system uses event-driven architecture to provide real-time drift detection while maintaining complete environment isolation between labs. AI-powered agents built on Amazon Bedrock provide intelligent drift analysis and conversational knowledge transfer to accelerate researcher onboarding and reduce IT overhead.
 
 ---
 
 ## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      AWS Cloud Infrastructure                      │
-├─────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐    │
-│  │   Web Portal    │  │  WorkSpaces     │  │  Drift Monitor  │    │
-│  │   (React/TS)    │  │ Secure Browser  │  │   (Real-time)   │    │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘    │
-│           │                     │                     │            │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐    │
-│  │  Auth Service   │  │  API Gateway    │  │ Environment Mgr │    │
-│  │  (Cognito/AD)   │  │   (REST API)    │  │  (Container)    │    │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘    │
-│           │                     │                     │            │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐    │
-│  │   ECS/Fargate   │  │   EFS Storage   │  │    EventBridge  │    │
-│  │ Jupyter Envs    │  │  (Persistent)   │  │   (Events)      │    │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘    │
-│           │                     │                     │            │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐    │
-│  │   Document DB   │  │     S3 Storage  │  │   EBS Volumes   │    │
-│  │  (MongoDB)      │  │   (Snapshots)   │  │  (Container)    │    │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘    │
-└─────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                         AWS Cloud Infrastructure                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │   Web Portal    │  │  WorkSpaces     │  │  Drift Monitor  │              │
+│  │  (React/TS)     │  │ Secure Browser  │  │   (Real-time)   │              │
+│  │  + Agent Chat   │  │                 │  │                 │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
+│           │                     │                     │                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │  Auth Service   │  │  API Gateway    │  │ Environment Mgr │              │
+│  │  (Cognito/AD)   │  │   (REST API)    │  │  (Container)    │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
+│           │                     │                     │                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │   ECS/Fargate   │  │   EFS Storage   │  │    EventBridge  │              │
+│  │ Jupyter Envs    │  │  (Persistent)   │  │   (Events)      │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
+│           │                     │                     │                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │   Document DB   │  │     S3 Storage  │  │   EBS Volumes   │              │
+│  │  (MongoDB)      │  │   (Snapshots)   │  │  (Container)    │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
+│                                                                              │
+│  ┌───────────────────────────────────────────────────────────────────────┐   │
+│  │                    Amazon Bedrock AI Layer                            │   │
+│  │  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────┐   │   │
+│  │  │ Drift Analyzer   │  │ Knowledge Xfer   │  │ Bedrock Knowledge │   │   │
+│  │  │ Agent            │  │ Agent            │  │ Base (RAG)        │   │   │
+│  │  │ (Bedrock Agent)  │  │ (Bedrock Agent)  │  │ (S3 Data Source)  │   │   │
+│  │  └──────────────────┘  └──────────────────┘  └───────────────────┘   │   │
+│  │           │                     │                     │              │   │
+│  │  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────┐   │   │
+│  │  │ Action Groups    │  │ Action Groups    │  │ OpenSearch        │   │   │
+│  │  │ (Lambda)         │  │ (Lambda)         │  │ Serverless        │   │   │
+│  │  │ - Get drift      │  │ - Get envs       │  │ (Vector Store)    │   │   │
+│  │  │ - Get packages   │  │ - Get snapshots  │  │                   │   │   │
+│  │  │ - Get notebooks  │  │ - Get history    │  │                   │   │   │
+│  │  └──────────────────┘  └──────────────────┘  └───────────────────┘   │   │
+│  └───────────────────────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -50,6 +68,7 @@ The West Tek platform follows a microservices architecture deployed on AWS, desi
 - **Collaboration Hub**: Inter-lab environment sharing interface
 - **Knowledge Transfer**: Researcher succession and onboarding workflows
 - **Jupyter Launcher**: Provision and access Jupyter environments via WorkSpaces Secure Browser
+- **AI Agent Chat Panel**: Embedded chat interface for interacting with the Drift Analyzer and Knowledge Transfer agents
 
 #### Data Flow:
 ```
@@ -207,6 +226,107 @@ SES Email + SNS SMS + Dashboard Update → Audit Log
 - **Incremental EBS**: Only snapshot changed blocks for efficiency
 - **Intelligent Tiering**: Automatic movement to cost-effective storage classes
 
+### 7. Drift Analyzer Agent (Amazon Bedrock Agent)
+**Technology**: Amazon Bedrock Agent with Claude foundation model
+**Action Groups**: Lambda functions that query platform APIs for drift data
+**Trigger**: Invoked automatically on critical drift events or on-demand via chat interface
+
+#### Agent Instructions:
+The Drift Analyzer Agent is configured with instructions to act as an expert scientific environment analyst. It explains environment changes in researcher-friendly language, assesses risk to active experiments, and recommends specific actions.
+
+#### Action Groups (Lambda-backed):
+```
+DriftDataActions:
+  - GetDriftEvents(environment_id, time_range) → Returns drift event details from DynamoDB
+  - GetPackageChangelog(package_name, old_version, new_version) → Fetches changelog/release notes
+  - GetEnvironmentNotebooks(environment_id) → Lists notebooks and their import dependencies
+  - GetSnapshotComparison(snapshot_id_before, snapshot_id_after) → Returns diff between snapshots
+  - GetEnvironmentConfig(environment_id) → Returns current environment configuration
+
+EnvironmentActions:
+  - CreateSnapshotRecommendation(environment_id, reason) → Logs a snapshot recommendation
+  - CreateRollbackRecommendation(environment_id, target_snapshot_id) → Logs a rollback recommendation
+```
+
+#### Agent Flow:
+```
+Drift Event Detected → EventBridge → Lambda (Drift Severity Check)
+  ├── Minor Drift → Log + Dashboard Alert
+  └── Critical Drift → Invoke Drift Analyzer Agent
+                         ├── Retrieve drift event details (Action Group)
+                         ├── Fetch package changelog (Action Group)
+                         ├── Analyze affected notebooks (Action Group)
+                         ├── Generate risk assessment + recommendation
+                         └── Return analysis → Dashboard + Email + Audit Log
+```
+
+#### Conversational Flow (On-Demand):
+```
+Researcher Chat Input → API Gateway → Lambda → Bedrock InvokeAgent API
+  → Drift Analyzer Agent (reasoning + action group calls)
+  → Response with citations → Chat Panel in Frontend
+```
+
+### 8. Knowledge Transfer Agent (Amazon Bedrock Agent + Knowledge Base)
+**Technology**: Amazon Bedrock Agent with Claude foundation model + Bedrock Knowledge Base
+**Knowledge Base**: S3 data source with OpenSearch Serverless vector store
+**Action Groups**: Lambda functions for structured data queries (environments, snapshots, audit logs)
+
+#### Knowledge Base Design:
+```
+S3 Data Source (s3://west-tek-knowledge-base/)
+├── notebooks/                    # Exported Jupyter notebooks (.ipynb → .md)
+│   └── {lab_id}/{researcher_id}/
+├── package-manifests/            # pip freeze outputs per snapshot
+│   └── {environment_id}/{snapshot_id}.txt
+├── experiment-logs/              # Experiment metadata and notes
+│   └── {lab_id}/{experiment_id}.json
+├── installation-history/         # Package installation rationale and decisions
+│   └── {environment_id}/history.jsonl
+└── environment-docs/             # Auto-generated environment documentation
+    └── {environment_id}/summary.md
+
+Vector Store: OpenSearch Serverless collection
+Embedding Model: Amazon Titan Embeddings V2
+Chunking Strategy: Hierarchical (parent: 1500 tokens, child: 300 tokens)
+```
+
+#### Agent Instructions:
+The Knowledge Transfer Agent is configured to act as an expert research environment historian. It helps new researchers understand inherited environments by answering questions about packages, notebooks, experimental workflows, and historical decisions. All answers must include citations to source documents.
+
+#### Action Groups (Lambda-backed):
+```
+EnvironmentQueryActions:
+  - GetEnvironmentDetails(environment_id) → Returns environment metadata from DocumentDB
+  - GetSnapshotHistory(environment_id) → Returns chronological snapshot list with metadata
+  - GetDriftHistory(environment_id, time_range) → Returns historical drift events
+  - GetResearcherProfile(researcher_id) → Returns researcher info and environment list
+  - GetPackageInstallHistory(environment_id, package_name) → Returns install/update timeline
+
+TransferActions:
+  - GetTransferPackage(environment_id) → Returns the full knowledge transfer summary
+  - GetOnboardingChecklist(environment_id) → Returns guided setup steps for new researcher
+```
+
+#### Agent Flow (Knowledge Transfer Session):
+```
+New Researcher Question → API Gateway → Lambda → Bedrock InvokeAgent API
+  → Knowledge Transfer Agent
+    ├── Search Knowledge Base (RAG over notebooks, docs, manifests)
+    ├── Call Action Groups (structured environment/snapshot data)
+    ├── Synthesize answer with citations
+    └── Response → Chat Panel in Frontend
+```
+
+#### Knowledge Base Sync Pipeline:
+```
+New Snapshot Created → EventBridge → Lambda (KB Sync)
+  ├── Export notebooks from EFS → Convert to markdown → Upload to S3
+  ├── Extract pip freeze → Upload to S3
+  ├── Generate environment summary doc → Upload to S3
+  └── Trigger Bedrock Knowledge Base StartIngestionJob API
+```
+
 ---
 
 ## Data Architecture
@@ -246,6 +366,14 @@ SES Email + SNS SMS + Dashboard Update → Audit Log
 **Purpose**: High-performance drift detection and real-time alerts
 **Configuration**: On-demand billing with Global Secondary Indexes
 **Data Types**: Container state changes, package modifications, file system events
+
+#### 6. Bedrock Knowledge Base (OpenSearch Serverless)
+**Purpose**: Vector store for RAG-based retrieval over notebooks, package manifests, and experiment documentation
+**Configuration**: OpenSearch Serverless collection with vector search enabled
+**Embedding Model**: Amazon Titan Embeddings V2
+**Data Source**: S3 bucket with hierarchical chunking (parent: 1500 tokens, child: 300 tokens)
+**Sync Strategy**: Automatic re-ingestion triggered on new snapshots via EventBridge → Lambda → StartIngestionJob API
+**Content Types**: Markdown-converted notebooks, pip freeze manifests, experiment logs, environment summaries
 
 ### Container Storage Architecture
 ```
@@ -318,9 +446,10 @@ Internet → CloudFront → ALB → Private Subnets → ECS/Lambda
 ## Deployment Architecture
 
 ### AWS Services Used
-- **Compute**: ECS Fargate (Jupyter containers), Lambda (drift detection, API functions)
-- **Storage**: S3 (snapshots, container images), EFS (persistent notebooks), EBS (container state), DocumentDB (metadata), DynamoDB (real-time data), ElastiCache (caching)
+- **Compute**: ECS Fargate (Jupyter containers), Lambda (drift detection, API functions, Bedrock Agent action groups)
+- **Storage**: S3 (snapshots, container images, Knowledge Base data source), EFS (persistent notebooks), EBS (container state), DocumentDB (metadata), DynamoDB (real-time data), ElastiCache (caching)
 - **Container**: ECR (Docker registry), ECS (orchestration)
+- **AI/ML**: Bedrock Agents (Drift Analyzer, Knowledge Transfer), Bedrock Knowledge Bases (RAG over notebooks and docs), OpenSearch Serverless (vector store), Bedrock Foundation Models (Claude)
 - **End User Computing**: WorkSpaces Secure Browser (research environment access)
 - **Networking**: VPC, ALB, CloudFront, API Gateway, NAT Gateway
 - **Security**: Cognito (authentication), IAM (authorization), KMS (encryption), Certificate Manager (SSL/TLS)

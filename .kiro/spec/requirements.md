@@ -40,11 +40,11 @@ West Tek Research requires a platform that preserves exact scientific computing 
 
 ---
 
-## Requirement 3: Environmental Drift Detection
+## Requirement 3: Environmental Drift Detection with AI Analysis
 
 **As a** Senior Scientist,
-**I want to** be alerted immediately when my Jupyter environment changes unexpectedly,
-**so that** I can prevent invalidation of months of experimental work.
+**I want to** be alerted immediately when my Jupyter environment changes unexpectedly and receive AI-powered analysis of the impact,
+**so that** I can prevent invalidation of months of experimental work with informed decision-making.
 
 ### Acceptance Criteria
 
@@ -54,6 +54,10 @@ West Tek Research requires a platform that preserves exact scientific computing 
 - WHEN critical drift occurs THE SYSTEM SHALL offer automated rollback to last known good container state
 - WHEN multiple Jupyter environments exist THE SYSTEM SHALL monitor each container independently and report status per environment
 - WHEN notebook files are modified THE SYSTEM SHALL track changes but classify them as expected research activity, not drift
+- WHEN drift is detected THE SYSTEM SHALL use a Bedrock Agent (Drift Analyzer) to generate a plain-English explanation of what changed and why it matters to the researcher's specific experiments
+- WHEN a package version changes THE DRIFT ANALYZER AGENT SHALL retrieve changelog information and assess compatibility risk against the researcher's notebooks and installed dependencies
+- WHEN the Drift Analyzer identifies a critical risk THE SYSTEM SHALL provide an AI-generated recommendation to accept, rollback, or pin the dependency with supporting reasoning
+- WHEN a researcher asks about drift events THE DRIFT ANALYZER AGENT SHALL answer conversationally, referencing specific notebooks, packages, and historical snapshots affected
 
 ---
 
@@ -74,11 +78,11 @@ West Tek Research requires a platform that preserves exact scientific computing 
 
 ---
 
-## Requirement 5: Knowledge Transfer Pipeline
+## Requirement 5: AI-Powered Knowledge Transfer Pipeline
 
 **As a** Principal Investigator,
-**I want to** transfer complete experimental context when researchers leave or new ones join,
-**so that** institutional knowledge is preserved and research continuity is maintained.
+**I want to** transfer complete experimental context when researchers leave or new ones join with an AI assistant that can answer questions about inherited environments,
+**so that** institutional knowledge is preserved, research continuity is maintained, and new researchers ramp up faster.
 
 ### Acceptance Criteria
 
@@ -87,6 +91,11 @@ West Tek Research requires a platform that preserves exact scientific computing 
 - WHEN transferring knowledge THE SYSTEM SHALL include environment rationale, package installation history, and notebook evolution
 - WHEN accessing inherited environments THE SYSTEM SHALL enforce original researcher's historical package constraints
 - WHEN documenting environments THE SYSTEM SHALL automatically generate reports with Python dependency explanations and notebook summaries
+- WHEN a new researcher inherits an environment THE SYSTEM SHALL provide a conversational Knowledge Transfer Agent (Bedrock Agent) that can answer questions about the environment, its history, and experimental context
+- WHEN a researcher asks the Knowledge Transfer Agent a question THE AGENT SHALL retrieve relevant information from notebooks, package histories, snapshot metadata, and experiment logs using Bedrock Knowledge Bases (RAG)
+- WHEN the Knowledge Transfer Agent answers THE AGENT SHALL provide citations linking back to specific notebooks, snapshots, or audit log entries
+- WHEN onboarding begins THE KNOWLEDGE TRANSFER AGENT SHALL proactively summarize the inherited environment including key packages, their purpose, notebook workflows, and known constraints
+- WHEN a researcher asks "why was this package pinned" or similar questions THE AGENT SHALL trace the decision back through drift history, snapshot metadata, and installation logs to provide the rationale
 
 ---
 
@@ -103,6 +112,25 @@ West Tek Research requires a platform that preserves exact scientific computing 
 - WHEN funding reviews occur THE SYSTEM SHALL generate executive dashboards showing research continuity metrics
 - WHEN audits are required THE SYSTEM SHALL export complete environment histories in standard formats
 - WHEN policies change THE SYSTEM SHALL demonstrate how historical environments remain unaffected
+
+---
+
+## Requirement 7: AI Agent Foundation (Bedrock Agents)
+
+**As a** West Tek Platform Administrator,
+**I want to** provide AI-powered conversational agents that assist researchers with drift analysis and knowledge transfer,
+**so that** researchers get intelligent, context-aware support without increasing IT staff overhead.
+
+### Acceptance Criteria
+
+- WHEN the platform is deployed THE SYSTEM SHALL provision two Amazon Bedrock Agents: a Drift Analyzer Agent and a Knowledge Transfer Agent
+- WHEN either agent is invoked THE SYSTEM SHALL authenticate the researcher via Cognito and enforce lab-level access controls so agents only access data the researcher is authorized to see
+- WHEN a Bedrock Agent needs to retrieve environment data THE SYSTEM SHALL expose platform APIs (environments, snapshots, drift events) as Bedrock Agent action groups backed by Lambda functions
+- WHEN the Knowledge Transfer Agent needs to search notebooks and documentation THE SYSTEM SHALL use a Bedrock Knowledge Base with an S3 data source containing ingested notebooks, package manifests, and experiment logs
+- WHEN either agent responds THE SYSTEM SHALL log the full interaction (query, retrieved context, response) to the audit trail for compliance
+- WHEN agent responses reference specific data THE SYSTEM SHALL include citations to source documents, snapshots, or log entries
+- WHEN the platform ingests new snapshots or notebooks THE SYSTEM SHALL automatically sync the Bedrock Knowledge Base data source to keep the RAG index current
+- WHEN a researcher interacts with an agent THE SYSTEM SHALL provide the conversation through a chat interface embedded in the React frontend
 
 ---
 
@@ -145,6 +173,9 @@ West Tek Research requires a platform that preserves exact scientific computing 
 - Must support Jupyter Notebook environments with Python scientific computing stack
 - Must work with existing lab networking through WorkSpaces Secure Browser access
 - Must provide persistent storage through EFS for notebooks and EBS for container state
+- Must use Amazon Bedrock Agents for AI-powered drift analysis and knowledge transfer capabilities
+- Must use Amazon Bedrock Knowledge Bases for RAG over notebooks, package histories, and experiment documentation
+- AI agent responses must be auditable and include citations to source data
 
 ### Business
 - Must not disrupt existing research workflows
@@ -162,3 +193,5 @@ West Tek Research requires a platform that preserves exact scientific computing 
 4. **Knowledge Transfer**: New researchers productive in inherited Jupyter environments within 1 week instead of 4 weeks
 5. **Operational Efficiency**: 60% reduction in IT support tickets for environment and package management issues
 6. **Research Continuity**: Ability to reproduce any experiment's exact computational environment from historical snapshots
+7. **AI-Assisted Drift Resolution**: 80% of drift events resolved with AI-recommended actions (accept, rollback, or pin) without requiring IT escalation
+8. **AI-Assisted Onboarding**: New researchers report >80% of environment questions answered by the Knowledge Transfer Agent without needing to contact the departing researcher
